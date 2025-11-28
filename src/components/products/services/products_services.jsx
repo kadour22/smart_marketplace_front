@@ -20,3 +20,12 @@ export const getProductDetails = async (productId) => {
     }
 }
 
+export const createProduct = async (productData) => {
+    try{
+        const response = await AxiosInstace.post("products/products-list/", productData);
+        return response.data;
+    }catch(error){
+        console.error("Error creating product:", error);
+        throw error;
+    }
+}
