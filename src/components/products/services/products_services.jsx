@@ -29,3 +29,13 @@ export const createProduct = async (productData) => {
         throw error;
     }
 }
+
+export const SemanticSearchProducts = async (query) => {
+    try{
+        const response = await AxiosInstace.get(`products/search/?q=${query}`);
+        return response.data;
+    }catch(error){
+        console.error("Error performing semantic search:", error);
+        throw error;
+    }
+}
