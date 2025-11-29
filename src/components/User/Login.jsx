@@ -1,11 +1,12 @@
 import React from 'react'
 import AxiosInstace from "../../AxiosInstance/call_api";
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const Login = () => {
 
     const [username, setUsername] = useState("kadour");
     const [password, setPassword] = useState("zaza");
-
+    const navigate = useNavigate()
     const handleLogin = async () => {
         try {
             const response = await AxiosInstace.post("customers/token/", {username, password});
@@ -15,7 +16,9 @@ const Login = () => {
                 localStorage.setItem("access_token", access);
                 localStorage.setItem("refresh_token", refresh);
                 AxiosInstace.defaults.headers["Authorization"] = `Bearer ${access}`;
-                console.log("user logged in")         
+                console.log("user logged in")  
+                navigate('/')       
+
             }
         } catch (error) {
             console.log("Error logging in user:", error);

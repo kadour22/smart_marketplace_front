@@ -1,4 +1,5 @@
 import AxiosInstace from "../../../AxiosInstance/call_api";
+import { useState } from "react";
 
 export const getProductsList = async () => {
     try{
@@ -6,6 +7,17 @@ export const getProductsList = async () => {
         return response.data;
     }catch(error){
         console.error("Error fetching products list:", error);
+        throw error;
+    }
+}
+
+
+export const SemanticSearchProducts = async (query) => {
+    try{
+        const response = await AxiosInstace.get(`products/search/?q=${query}`);
+        return response.data;
+    }catch(error){
+        console.error("Error performing semantic search:", error);
         throw error;
     }
 }
@@ -26,16 +38,6 @@ export const createProduct = async (productData) => {
         return response.data;
     }catch(error){
         console.error("Error creating product:", error);
-        throw error;
-    }
-}
-
-export const SemanticSearchProducts = async (query) => {
-    try{
-        const response = await AxiosInstace.get(`products/search/?q=${query}`);
-        return response.data;
-    }catch(error){
-        console.error("Error performing semantic search:", error);
         throw error;
     }
 }
