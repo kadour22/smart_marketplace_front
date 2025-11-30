@@ -1,8 +1,9 @@
 import React from "react";
 import { Sparkles,SlidersHorizontal,Search } from "lucide-react";
+import {SemanticSearchProducts} from "../products/services/products_services"
+const AISearchBar = ({ handleSementicSearch,searchQuery,setSearchQuery }) => {
 
-const AISearchBar = ({ searchQuery, setSearchQuery, showFilters, setShowFilters }) => {
-  return (
+    return (
     <div className="relative group">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition"></div>
       
@@ -20,14 +21,14 @@ const AISearchBar = ({ searchQuery, setSearchQuery, showFilters, setShowFilters 
             className="flex-1 text-lg outline-none text-slate-900 placeholder-slate-400"
           />
           
-          <button 
+          {/* <button 
             onClick={() => setShowFilters(!showFilters)}
             className="p-3 hover:bg-slate-100 rounded-xl transition"
           >
             <SlidersHorizontal className="w-5 h-5 text-slate-600" />
-          </button>
+          </button> */}
           
-          <button className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg transition font-medium flex items-center space-x-2">
+          <button onClick={handleSementicSearch} className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-lg transition font-medium flex items-center space-x-2">
             <Search className="w-5 h-5" />
             <span>Search</span>
           </button>

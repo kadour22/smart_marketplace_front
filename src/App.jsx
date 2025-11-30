@@ -6,6 +6,7 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Herosection from './components/HeroSection/Herosection'
 import AISearchBar from './components/HeroSection/AISearchBar'
+
 function App() {
   const [count, setCount] = useState(0)
 
@@ -14,7 +15,7 @@ function App() {
     <BrowserRouter>
     <Navbar/>
     <Herosection/>
-    <AISearchBar />
+    <br />
       <Routes>
         <Route path='/' element={<ProductsList/>}/>
         <Route path='/login' element={<Login/>}/>

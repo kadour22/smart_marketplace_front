@@ -3,6 +3,9 @@ import {
   getProductsList,
   SemanticSearchProducts,
 } from "./services/products_services";
+import ProductCard from "./ProductCard";
+import AISearchBar from "../HeroSection/AISearchBar";
+import ProductSearchCard from "./ProductSearchCard";
 
 const ProductsList = () => {
   
@@ -28,41 +31,31 @@ const ProductsList = () => {
     display_all_products();
   }, []);
 
-const handleSementicSearch = async () => {
-  try {
-    const response = await SemanticSearchProducts(searchQuery);
+    const handleSementicSearch = async () => {
 
-    // If your backend returns { results: [...] }
-    setSementicSearch(response.results);  
+        try {
+            const response = await SemanticSearchProducts(searchQuery);
+            setSementicSearch(response.results);  
+            setIsSearching(true);
 
-    setIsSearching(true);
-  } catch (error) {
-    console.log("Semantic search error:", error);
-  }
-};
+        } catch (error) {
+            console.log("Semantic search error:", error);
+        }
+    };
+
   if (loading) return <p>Loading...</p>;
 
   return (
     <div>
-      <div className="search">
-        <input type="text" onChange={(e) => setSearchQuery(e.target.value)} />
-        <button onClick={handleSementicSearch}>Search</button>
-      </div>
+        <AISearchBar handleSementicSearch={handleSementicSearch} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
+        <br /><br />
       {!isSearching ? (
         products?.map((product) => (
-          <div key={product.id}>
-            <h3>{product.product_name}</h3>
-            <img src={BASE_URL + product.image} alt="" width={100} />
-            <p>{product.description}</p>
-            <small>{product.price} DT</small>
-          </div>
+          <ProductCard product={product} image={BASE_URL+product.image}/>
         ))
       ) : (
         semanticsearch?.map((item) => (
-          <div key={item.id} style={{ border: "1px solid #ccc", margin: "10px" }}>
-            <h3>{item.name}</h3>
-            <p>{item.price}</p>
-          </div>
+          <ProductSearchCard item={item} image={BASE_URL+item.image}/>
         ))
       )}
 
