@@ -41,3 +41,13 @@ export const createProduct = async (productData) => {
         throw error;
     }
 }
+
+export const DeleteProduct = async (productId) => {
+    try{
+        const response = await AxiosInstace.delete(`products/product/${productId}/`);
+        return response.data;
+    }catch(error){
+        console.error("Error deleting product:", error);
+        throw error;
+    }
+}

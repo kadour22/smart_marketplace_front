@@ -8,6 +8,7 @@ import AISearchBar from "../HeroSection/AISearchBar";
 import ProductSearchCard from "./ProductSearchCard";
 import ProductsGrid from "./ProductGrid";
 import FeaturesSection from "../Features/FeatureSections";
+import Loader from "../Loader/Loader";
 
 const ProductsList = () => {
   
@@ -45,7 +46,7 @@ const ProductsList = () => {
         }
     };
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
 
   return (
 
