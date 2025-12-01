@@ -6,6 +6,7 @@ import {
 import ProductCard from "./ProductCard";
 import AISearchBar from "../HeroSection/AISearchBar";
 import ProductSearchCard from "./ProductSearchCard";
+import ProductsGrid from "./ProductGrid";
 
 const ProductsList = () => {
   
@@ -50,9 +51,7 @@ const ProductsList = () => {
         <AISearchBar handleSementicSearch={handleSementicSearch} searchQuery={searchQuery} setSearchQuery={setSearchQuery}/>
         <br /><br />
       {!isSearching ? (
-        products?.map((product) => (
-          <ProductCard product={product} image={BASE_URL+product.image}/>
-        ))
+          <ProductsGrid products={products}/>
       ) : (
         semanticsearch?.map((item) => (
           <ProductSearchCard item={item} image={BASE_URL+item.image}/>

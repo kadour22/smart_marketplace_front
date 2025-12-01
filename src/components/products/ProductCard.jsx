@@ -1,6 +1,7 @@
 import React from "react";
 import { Star,Heart } from "lucide-react";
-const ProductCard = ({ product,image }) => {
+
+const ProductCard = ({ product, image}) => {
     const BASE_URL = "127.0.0.1:8000"
   return (
     <div className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200 hover:border-blue-300">
@@ -23,8 +24,6 @@ const ProductCard = ({ product,image }) => {
             {/* <span className="text-sm font-medium text-slate-700">{product.rating}</span> */}
           </div>
         </div>
-        
-        <p className="text-sm text-slate-600 mb-4">{product.description}</p>
         
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-blue-600">${product.price}</span>
