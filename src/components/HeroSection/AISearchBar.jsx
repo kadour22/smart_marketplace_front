@@ -1,9 +1,12 @@
 import React from "react";
 import { Sparkles,SlidersHorizontal,Search } from "lucide-react";
 import {SemanticSearchProducts} from "../products/services/products_services"
+import Herosection from "./Herosection";
 const AISearchBar = ({ handleAISearch,searchQuery,setSearchQuery }) => {
 
     return (
+    <>
+        <Herosection/>
     <div className="relative group">
       <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-2xl blur-xl opacity-20 group-hover:opacity-30 transition"></div>
       
@@ -35,6 +38,7 @@ const AISearchBar = ({ handleAISearch,searchQuery,setSearchQuery }) => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

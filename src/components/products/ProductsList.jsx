@@ -10,14 +10,16 @@ import AISearchBar from "../HeroSection/AISearchBar";
 import ProductsGrid from "./ProductGrid";
 import FeaturesSection from "../Features/FeatureSections";
 import Loader from "../Loader/Loader";
+import AISearchLoader from "../Loader/Loader";
 
 const ProductsList = () => {
 
     const [products, setProducts] = useState([]);
     const [semanticsearch, setSementicSearch] = useState([]);
-    const [aiResults, setAiResults] = useState([]); // <-- FIXED
+    const [aiResults, setAiResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
+    const [searchLoading, setSearchLoading] = useState(false); // NEW: For search loading
     const [searchMode, setSearchMode] = useState(""); // "ai" or "semantic"
     const [searchQuery, setSearchQuery] = useState("");
 
@@ -39,6 +41,8 @@ const ProductsList = () => {
     // SEMANTIC SEARCH
     // ---------------------------
     const handleSementicSearch = async () => {
+        setSearchLoading(true); // Start loading
+        setIsSearching(false); // Hide previous results
         try {
             const response = await SemanticSearchProducts(searchQuery);
             setSementicSearch(response.results);
@@ -46,6 +50,8 @@ const ProductsList = () => {
             setSearchMode("semantic");
         } catch (error) {
             console.log("Semantic search error:", error);
+        } finally {
+            setSearchLoading(false); // Stop loading
         }
     };
 
@@ -53,18 +59,22 @@ const ProductsList = () => {
     // AI SEARCH
     // ---------------------------
     const handleAISearch = async () => {
+        setSearchLoading(true); // Start loading
+        setIsSearching(false); // Hide previous results
         try {
             const response = await AISearch(searchQuery);
-            setAiResults(response.results);    // <-- FIXED
+            setAiResults(response.results);
             setIsSearching(true);
             setSearchMode("ai");
             console.log(response);
         } catch (error) {
             console.log("AI search error:", error);
+        } finally {
+            setSearchLoading(false); // Stop loading
         }
     };
 
-    if (loading) return <Loader />;
+    if (loading) return <AISearchLoader />;
 
     return (
         <>
@@ -78,16 +88,25 @@ const ProductsList = () => {
 
                 <br /><br />
 
+                {/* ---------- SEARCH LOADING ---------- */}
+                {searchLoading && (
+                    <div className="flex flex-col items-center justify-center py-20">
+                        <Loader />
+                        <p className="mt-4 text-slate-600 text-lg">
+                            {searchMode === "ai" ? "AI is analyzing your request..." : "Searching products..."}
+                        </p>
+                    </div>
+                )}
+
                 {/* ---------- DEFAULT PRODUCTS ---------- */}
-                {!isSearching && <ProductsGrid products={products} />}
+                {!isSearching && !searchLoading && <ProductsGrid products={products} />}
 
                 {/* ---------- SEMANTIC SEARCH RESULTS ---------- */}
-                {isSearching && searchMode === "semantic" && (
+                {isSearching && searchMode === "semantic" && !searchLoading && (
                     <ProductsGrid products={semanticsearch} />
                 )}
 
-                {/* ---------- AI SEARCH RESULTS ---------- */}
-                {isSearching && searchMode === "ai" && (
+                {isSearching && searchMode === "ai" && !searchLoading && (
                     <ProductsGrid products={aiResults} />
                 )}
             </div>

@@ -1,15 +1,224 @@
-import React from 'react'
+import React from 'react';
+import { motion } from 'framer-motion';
+import { Sparkles } from 'lucide-react';
 
-const Loader = () => {
+const AISearchLoader = ({ message = "AI is analyzing your request..." }) => {
   return (
-    <div role="status">
-    <svg aria-hidden="true" class="w-8 h-8 text-neutral-tertiary animate-spin fill-brand" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-    </svg>
-    <span className="sr-only">Loading...</span>
-</div>
-  )
-}
+    <div className="flex flex-col items-center justify-center py-20">
+      {/* Robot SVG Animation */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative"
+      >
+        {/* Floating Robot */}
+        <motion.svg
+          animate={{ y: [-10, 10, -10] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          width="120"
+          height="120"
+          viewBox="0 0 120 120"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          {/* Robot Head */}
+          <motion.rect
+            animate={{ rotate: [-5, 5, -5] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            x="30"
+            y="30"
+            width="60"
+            height="50"
+            rx="8"
+            fill="url(#robotGradient)"
+            className="drop-shadow-lg"
+          />
+          
+          {/* Antenna */}
+          <motion.line
+            animate={{ scaleY: [1, 1.2, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            x1="60"
+            y1="30"
+            x2="60"
+            y2="15"
+            stroke="url(#antennaGradient)"
+            strokeWidth="3"
+            strokeLinecap="round"
+          />
+          <motion.circle
+            animate={{ scale: [1, 1.3, 1] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+            cx="60"
+            cy="12"
+            r="4"
+            fill="#60A5FA"
+            className="drop-shadow-md"
+          />
+          
+          {/* Left Eye */}
+          <motion.circle
+            animate={{ scale: [1, 0.8, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            cx="45"
+            cy="50"
+            r="6"
+            fill="#60A5FA"
+          />
+          
+          {/* Right Eye */}
+          <motion.circle
+            animate={{ scale: [1, 0.8, 1] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            cx="75"
+            cy="50"
+            r="6"
+            fill="#60A5FA"
+          />
+          
+          {/* Mouth/Display */}
+          <motion.rect
+            animate={{ width: [30, 40, 30] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            x="45"
+            y="62"
+            width="30"
+            height="8"
+            rx="4"
+            fill="#818CF8"
+            opacity="0.6"
+          />
+          
+          {/* Body */}
+          <rect
+            x="35"
+            y="85"
+            width="50"
+            height="25"
+            rx="6"
+            fill="url(#bodyGradient)"
+            className="drop-shadow-lg"
+          />
+          
+          {/* Left Arm */}
+          <motion.rect
+            animate={{ rotate: [-20, 20, -20] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            x="20"
+            y="88"
+            width="12"
+            height="20"
+            rx="6"
+            fill="url(#armGradient)"
+            style={{ transformOrigin: "26px 88px" }}
+          />
+          
+          {/* Right Arm */}
+          <motion.rect
+            animate={{ rotate: [20, -20, 20] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+            x="88"
+            y="88"
+            width="12"
+            height="20"
+            rx="6"
+            fill="url(#armGradient)"
+            style={{ transformOrigin: "94px 88px" }}
+          />
+          
+          {/* Gradients */}
+          <defs>
+            <linearGradient id="robotGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#3B82F6" />
+              <stop offset="100%" stopColor="#6366F1" />
+            </linearGradient>
+            <linearGradient id="bodyGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#2563EB" />
+              <stop offset="100%" stopColor="#4F46E5" />
+            </linearGradient>
+            <linearGradient id="armGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#60A5FA" />
+              <stop offset="100%" stopColor="#818CF8" />
+            </linearGradient>
+            <linearGradient id="antennaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stopColor="#60A5FA" />
+              <stop offset="100%" stopColor="#3B82F6" />
+            </linearGradient>
+          </defs>
+        </motion.svg>
 
-export default Loader
+        {/* Sparkles around robot */}
+        <motion.div
+          animate={{ rotate: 360 }}
+          transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+          className="absolute top-0 left-0 w-full h-full"
+        >
+          {[0, 60, 120, 180, 240, 300].map((angle, i) => (
+            <motion.div
+              key={i}
+              animate={{ 
+                scale: [1, 1.5, 1],
+                opacity: [0.3, 1, 0.3]
+              }}
+              transition={{ 
+                duration: 2, 
+                repeat: Infinity, 
+                delay: i * 0.3,
+                ease: "easeInOut"
+              }}
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                transform: `rotate(${angle}deg) translateX(60px)`,
+              }}
+            >
+              <Sparkles className="w-4 h-4 text-blue-400" />
+            </motion.div>
+          ))}
+        </motion.div>
+      </motion.div>
+
+      {/* Loading Message */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3 }}
+        className="mt-8 text-center"
+      >
+        <p className="text-lg font-semibold text-slate-700 mb-2">{message}</p>
+        
+        {/* Animated Dots */}
+        <div className="flex items-center justify-center space-x-2">
+          {[0, 1, 2].map((i) => (
+            <motion.div
+              key={i}
+              animate={{ 
+                y: [-3, 3, -3],
+                opacity: [0.4, 1, 0.4]
+              }}
+              transition={{ 
+                duration: 1, 
+                repeat: Infinity, 
+                delay: i * 0.2,
+                ease: "easeInOut"
+              }}
+              className="w-2 h-2 bg-blue-600 rounded-full"
+            />
+          ))}
+        </div>
+      </motion.div>
+
+      {/* Progress Bar */}
+      <motion.div 
+        initial={{ width: 0 }}
+        animate={{ width: "240px" }}
+        transition={{ duration: 3, repeat: Infinity }}
+        className="mt-6 h-1 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full"
+      />
+    </div>
+  );
+};
+
+export default AISearchLoader;

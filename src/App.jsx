@@ -16,7 +16,6 @@ function App() {
     <>
     <BrowserRouter>
     <Navbar/>
-    <Herosection/>
     <br />
       <Routes>
         <Route path='/' element={<ProductsList/>}/>
