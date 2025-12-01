@@ -1,5 +1,6 @@
 import React from "react";
 import { Star,Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProductCard = ({ product, image}) => {
     const BASE_URL = "127.0.0.1:8000"
@@ -27,9 +28,9 @@ const ProductCard = ({ product, image}) => {
         
         <div className="flex items-center justify-between">
           <span className="text-2xl font-bold text-blue-600">${product.price}</span>
-          <button className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:shadow-lg transition font-medium">
+          <Link to={`/product/${product.id}`} className="px-4 py-2 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-lg hover:shadow-lg transition font-medium">
             View Details
-          </button>
+          </Link>
         </div>
       </div>
     </div>
