@@ -6,6 +6,7 @@ import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Herosection from './components/HeroSection/Herosection'
 import AISearchBar from './components/HeroSection/AISearchBar'
+import FeaturesSection from './components/Features/FeatureSections'
 
 function App() {
   const [count, setCount] = useState(0)
