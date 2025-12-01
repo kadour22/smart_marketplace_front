@@ -51,3 +51,15 @@ export const DeleteProduct = async (productId) => {
         throw error;
     }
 }
+
+export const AISearch = async (query) => {
+    try {
+        const response = await AxiosInstace.post("products/ai-assistant/", {
+            query: query
+        });
+        return response.data;
+    } catch (error) {
+        console.error("Error performing AI search:", error);
+        throw error;
+    }
+}
