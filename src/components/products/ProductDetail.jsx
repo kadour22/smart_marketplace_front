@@ -167,6 +167,7 @@ const ProductDetail = () => {
                 <span className="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
                   In Stock
                 </span>
+                
                 <motion.div 
                   initial={{ rotate: 0 }}
                   animate={{ rotate: 360 }}
@@ -310,28 +311,6 @@ const ProductDetail = () => {
               transition={{ delay: 1.4 }}
               className="space-y-4"
             >
-              {/* <div className="flex items-center space-x-4">
-                <span className="text-sm font-medium text-slate-700">Quantity:</span>
-                <div className="flex items-center border border-slate-300 rounded-lg overflow-hidden">
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 hover:bg-slate-50 transition"
-                  >
-                    -
-                  </motion.button>
-                  <span className="px-6 py-2 border-x border-slate-300 font-semibold">
-                    {quantity}
-                  </span>
-                  <motion.button
-                    whileTap={{ scale: 0.9 }}
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-4 py-2 hover:bg-slate-50 transition"
-                  >
-                    +
-                  </motion.button>
-                </div>
-              </div> */}
 
               <div className="grid grid-cols-2 gap-4">
                 <motion.button 
@@ -348,7 +327,11 @@ const ProductDetail = () => {
                   className="flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-xl transition font-semibold"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  <Link to="/seller-contact">Contact The Seller</Link>
+                  <Link to="/seller-contact"
+                   state={{
+                        seller: product.seller,
+                    }}
+                  >Contact The Seller</Link>
                 </motion.button>
               </div>
             </motion.div>

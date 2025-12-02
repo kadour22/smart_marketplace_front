@@ -4,6 +4,7 @@ import {
   MessageSquare, Send, X, User, Mail, Phone, 
   Clock, CheckCircle, Sparkles
 } from 'lucide-react';
+import { useLocation } from 'react-router-dom';
 
 const ContactSeller = ({ seller, productName, onClose }) => {
   const [formData, setFormData] = useState({
@@ -12,8 +13,13 @@ const ContactSeller = ({ seller, productName, onClose }) => {
     phone: '',
     message: ''
   });
+
   const [isSending, setIsSending] = useState(false);
   const [isSent, setIsSent] = useState(false);
+
+  const {state} = useLocation();
+
+  const username = state?.seller
 
   const handleChange = (e) => {
     setFormData({
@@ -125,7 +131,7 @@ const ContactSeller = ({ seller, productName, onClose }) => {
               </motion.div>
               <div>
                 <h3 className="text-lg font-bold text-slate-900">
-                  {seller?.name || "Premium Seller"}
+                  {username || "Premium Seller"} product owner
                 </h3>
                 <div className="flex items-center space-x-4 text-sm text-slate-600 mt-1">
                   <div className="flex items-center space-x-1">
