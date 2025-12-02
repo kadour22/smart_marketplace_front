@@ -310,7 +310,7 @@ const ProductDetail = () => {
               transition={{ delay: 1.4 }}
               className="space-y-4"
             >
-              <div className="flex items-center space-x-4">
+              {/* <div className="flex items-center space-x-4">
                 <span className="text-sm font-medium text-slate-700">Quantity:</span>
                 <div className="flex items-center border border-slate-300 rounded-lg overflow-hidden">
                   <motion.button
@@ -331,7 +331,7 @@ const ProductDetail = () => {
                     +
                   </motion.button>
                 </div>
-              </div>
+              </div> */}
 
               <div className="grid grid-cols-2 gap-4">
                 <motion.button 
@@ -348,7 +348,7 @@ const ProductDetail = () => {
                   className="flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-xl transition font-semibold"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  <span>Add to Cart</span>
+                  <Link to="/seller-contact">Contact The Seller</Link>
                 </motion.button>
               </div>
             </motion.div>

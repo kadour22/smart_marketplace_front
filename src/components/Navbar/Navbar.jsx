@@ -1,6 +1,7 @@
 
 import React from 'react';
 import {Sparkles, Heart } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 
 const Navbar = () => {
@@ -19,7 +20,11 @@ const Navbar = () => {
           
           <nav className="hidden md:flex items-center space-x-8">
             <a href="#" className="text-slate-600 hover:text-blue-600 transition font-medium">Products</a>
-            <a href="#" className="text-slate-600 hover:text-blue-600 transition font-medium">Categories</a>
+            <a href="#" className="text-slate-600 hover:text-blue-600 transition font-medium"></a>
+            <Link to="/wishlist">
+             <span>WishList</span>
+             <Heart className="w-4 h-4 inline-block ml-1 text-red-500"/>
+            </Link>
             <a href="#" className="text-slate-600 hover:text-blue-600 transition font-medium">Deals</a>
           </nav>
 

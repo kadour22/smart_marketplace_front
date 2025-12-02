@@ -1,13 +1,15 @@
 import './App.css'
 import { useState } from 'react'
 import ProductsList from './components/products/ProductsList'
-import Login from './components/User/Login'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import Navbar from './components/Navbar/Navbar'
 import Herosection from './components/HeroSection/Herosection'
 import AISearchBar from './components/HeroSection/AISearchBar'
 import FeaturesSection from './components/Features/FeatureSections'
 import ProductDetail from './components/products/ProductDetail'
+import LandingPage from './components/Landing/LandingPgae'
+import AuthComponents from './components/User/AuthComponent'
+import ContactSeller from './components/User/ContactSeller'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,12 +17,14 @@ function App() {
   return (
     <>
     <BrowserRouter>
-    <Navbar/>
+        <Navbar />
     <br />
       <Routes>
-        <Route path='/' element={<ProductsList/>}/>
-        <Route path='/login' element={<Login/>}/>
+        <Route path='/' element={<LandingPage />} />
+        <Route path='/products' element={<ProductsList/>}/>
+        <Route path='/login' element={<AuthComponents/>}/>
         <Route path='/product/:id' element={<ProductDetail />}/>
+        <Route path='/seller-contact' element={<ContactSeller/>}/>
       </Routes>
     </BrowserRouter>
     </>
