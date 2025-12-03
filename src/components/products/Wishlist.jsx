@@ -4,13 +4,21 @@ import {
   Heart, Trash2, ShoppingCart, Sparkles, Package, 
   AlertCircle, X
 } from 'lucide-react';
-import { getWishlist } from './services/products_services';
-import { Link } from 'react-router-dom';
+import { getWishlist,RemoveProductFromWishList } from './services/products_services';
+import { Link,useLocation } from 'react-router-dom';
 
 const Wishlist = () => {
   const [wishlist, setWishlist] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
+   const handleRemoveFromWishlist = async (productId) => {
+    const response = await RemoveProductFromWishList(productId);
+    setRefresh(prev => !prev);
+    console.log('Remove product:', productId);
+    // Update state after removal
+  };
+  
   useEffect(() => {
     const fetchWishlist = async () => {
       try {
@@ -25,18 +33,10 @@ const Wishlist = () => {
     };
 
     fetchWishlist();
-  }, []);
+  }, [refresh]);
   const BASE_URL = "http://127.0.0.1:8000";
-  const handleRemoveFromWishlist = (productId) => {
-    // Add your remove logic here
-    console.log('Remove product:', productId);
-    // Update state after removal
-  };
-
-  const handleAddToCart = (product) => {
-    // Add your cart logic here
-    console.log('Add to cart:', product);
-  };
+ 
+ 
 
   if (loading) {
     return (
@@ -182,9 +182,10 @@ const Wishlist = () => {
                         {/* Action Buttons */}
                         <div className="flex items-center space-x-2">
                           <motion.button
+                            onClick={() => handleRemoveFromWishlist(product.id)}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            onClick={() => handleAddToCart(product)}
+                            
                             className="flex-1 py-2.5 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-lg hover:shadow-lg transition font-medium text-sm flex items-center justify-center space-x-2"
                           >
                             <Trash2 className="w-4 h-4" />

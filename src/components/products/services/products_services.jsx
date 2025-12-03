@@ -80,7 +80,17 @@ export const getWishlist = async () => {
         const response = await AxiosInstace.get("customers/wishlist/");
         return response.data;
     }catch(error){
-        console.error("Error fetching wishlist:", error);
+        console.log("Error fetching wishlist:", error);
         throw error;
     }
 }
+
+export const RemoveProductFromWishList = async (productId) => {
+    try{
+        const response = await AxiosInstace.delete(`products/delete-product-from-wishlist/${productId}/`);
+        return response.data;
+    }catch(error){
+        console.error("Error removing product from wishlist:", error);
+        throw error;
+    }
+}   
