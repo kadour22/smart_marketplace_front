@@ -11,6 +11,7 @@ import LandingPage from './components/Landing/LandingPgae'
 import AuthComponents from './components/User/AuthComponent'
 import ContactSeller from './components/User/ContactSeller'
 import Profile from './components/User/Profile'
+import Wishlist from './components/products/Wishlist'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -27,6 +28,7 @@ function App() {
         <Route path='/product/:id' element={<ProductDetail />}/>
         <Route path='/seller-contact' element={<ContactSeller/>}/>
         <Route path='/profile' element={<Profile />}/>
+        <Route path='/wishlist' element={<Wishlist />} />
       </Routes>
     </BrowserRouter>
     </>

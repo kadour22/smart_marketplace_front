@@ -1,10 +1,11 @@
-import React from "react";
+import React,{useState} from "react";
 import { Star, Heart } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import AxiosInstace from "../../AxiosInstance/call_api";
+
 
 const ProductCard = ({ product, image }) => {
-  const BASE_URL = "127.0.0.1:8000";
 
   return (
     <motion.div
@@ -41,6 +42,7 @@ const ProductCard = ({ product, image }) => {
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2 }}
+            onClick={() => AddProductToWishList(product.id)}
         >
           <Heart className="w-4 h-4 text-slate-600" />
         </motion.button>

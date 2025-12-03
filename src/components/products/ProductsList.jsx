@@ -4,8 +4,6 @@ import {
     getProductsList,
     SemanticSearchProducts,
 } from "./services/products_services";
-
-import ProductCard from "./ProductCard";
 import AISearchBar from "../HeroSection/AISearchBar";
 import ProductsGrid from "./ProductGrid";
 import FeaturesSection from "../Features/FeatureSections";
@@ -19,8 +17,8 @@ const ProductsList = () => {
     const [aiResults, setAiResults] = useState([]);
     const [loading, setLoading] = useState(true);
     const [isSearching, setIsSearching] = useState(false);
-    const [searchLoading, setSearchLoading] = useState(false); // NEW: For search loading
-    const [searchMode, setSearchMode] = useState(""); // "ai" or "semantic"
+    const [searchLoading, setSearchLoading] = useState(false);
+    const [searchMode, setSearchMode] = useState(""); 
     const [searchQuery, setSearchQuery] = useState("");
 
     useEffect(() => {
@@ -37,9 +35,6 @@ const ProductsList = () => {
         display_all_products();
     }, []);
 
-    // ---------------------------
-    // SEMANTIC SEARCH
-    // ---------------------------
     const handleSementicSearch = async () => {
         setSearchLoading(true); // Start loading
         setIsSearching(false); // Hide previous results
@@ -55,9 +50,6 @@ const ProductsList = () => {
         }
     };
 
-    // ---------------------------
-    // AI SEARCH
-    // ---------------------------
     const handleAISearch = async () => {
         setSearchLoading(true); // Start loading
         setIsSearching(false); // Hide previous results

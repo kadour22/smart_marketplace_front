@@ -63,3 +63,24 @@ export const AISearch = async (query) => {
         throw error;
     }
 }
+
+export const AddProductToWishList = async (productId) => {
+    try{
+        const response = await AxiosInstace.post(`products/wishlist/${productId}/`);
+        console.log(response)
+        return response.data;
+    }catch(error){
+        console.log("Error adding product to wishlist:", error);
+    }
+  };
+
+
+export const getWishlist = async () => {
+    try{
+        const response = await AxiosInstace.get("customers/wishlist/");
+        return response.data;
+    }catch(error){
+        console.error("Error fetching wishlist:", error);
+        throw error;
+    }
+}

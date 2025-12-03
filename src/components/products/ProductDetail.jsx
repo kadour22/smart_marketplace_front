@@ -5,9 +5,9 @@ import {
   Heart, ShoppingCart, Star, Sparkles, 
   Truck, Shield, RefreshCw, ArrowLeft
 } from 'lucide-react';
-import { getProductDetails } from './services/products_services';
+import { AddProductToWishList, getProductDetails } from './services/products_services';
+import AISearchLoader from '../Loader/Loader';
 
-// Image Gallery Component
 const ImageGallery = ({ images, productName }) => {
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -60,32 +60,6 @@ const ImageGallery = ({ images, productName }) => {
   );
 };
 
-// Loading Skeleton
-const LoadingSkeleton = () => {
-  return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div className="space-y-4">
-            <div className="bg-slate-200 rounded-2xl aspect-square animate-pulse"></div>
-            <div className="grid grid-cols-4 gap-3">
-              {[...Array(4)].map((_, i) => (
-                <div key={i} className="bg-slate-200 aspect-square rounded-lg animate-pulse"></div>
-              ))}
-            </div>
-          </div>
-          <div className="space-y-6">
-            <div className="h-8 bg-slate-200 rounded animate-pulse w-3/4"></div>
-            <div className="h-6 bg-slate-200 rounded animate-pulse w-1/2"></div>
-            <div className="h-12 bg-slate-200 rounded animate-pulse w-1/3"></div>
-            <div className="h-32 bg-slate-200 rounded-xl animate-pulse"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 // Product Detail Component
 const ProductDetail = () => {
   const BASE_URL = "http://127.0.0.1:8000";
@@ -111,9 +85,12 @@ const ProductDetail = () => {
   }, [id]);
 
   if (loading) {
-    return <LoadingSkeleton />;
+    return <AISearchLoader />;
   }
 
+  const handleWishList = () => {
+    AddProductToWishList(product.id);
+  };
   if (!product) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
@@ -130,7 +107,8 @@ const ProductDetail = () => {
     ? [BASE_URL + product.image]
     : ["https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600&h=600&fit=crop"];
 
-  return (
+  
+    return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
@@ -141,7 +119,7 @@ const ProductDetail = () => {
           className="flex items-center text-slate-600 hover:text-blue-600 mb-6 transition"
         >
           <ArrowLeft className="w-5 h-5 mr-2" />
-          <Link to="/" className="font-medium">Back to Products</Link>
+          <Link to="/products" className="font-medium">Back to Products</Link>
         </motion.button>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
@@ -314,6 +292,7 @@ const ProductDetail = () => {
 
               <div className="grid grid-cols-2 gap-4">
                 <motion.button 
+                  onClick={handleWishList}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center space-x-2 px-6 py-4 border-2 border-blue-600 text-blue-600 rounded-xl hover:bg-blue-50 transition font-semibold"
