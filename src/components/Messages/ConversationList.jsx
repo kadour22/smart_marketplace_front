@@ -109,7 +109,7 @@ const ConversationList = () => {
                     whileHover={{ scale: 1.02, x: 5 }}
                     className="group"
                   >
-                    <Link to={`/messages/${conversation.id}`}>
+                    <Link to={`/messages/${conversation.id}/`} className="block">
                       <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-slate-200 hover:border-blue-300 p-6 cursor-pointer">
                         <div className="flex items-start space-x-4">
                           {/* Avatar */}

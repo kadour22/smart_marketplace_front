@@ -11,6 +11,7 @@ import ContactSeller from './components/User/ContactSeller'
 import Profile from './components/User/Profile'
 import Wishlist from './components/products/Wishlist'
 import ConversationList from './components/Messages/ConversationList'
+import ConversationMessages from './components/Messages/ConversationMessages'
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
         <Route path='/profile' element={<Profile />}/>
         <Route path='/wishlist' element={<Wishlist />} />
         <Route path='/conversations' element={<ConversationList />} />
+        <Route path='/messages/:id/' element={<ConversationMessages/>} />
       </Routes>
     </BrowserRouter>
     </>

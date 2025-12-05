@@ -25,7 +25,7 @@ export const listConversation = async () => {
 
 export const ConversationMessagesList = async (conversation_id) => {
     try{
-        const response = AxiosInstace.get(`conversations/${conversation_id}/messages/`);
+        const response = await AxiosInstace.get(`messages/messages/${conversation_id}/`);
         return response.data
     }catch(error){
         console.log("error in fetching messages")
