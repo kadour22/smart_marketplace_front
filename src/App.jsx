@@ -1,20 +1,18 @@
 import './App.css'
 import { useState } from 'react'
-import ProductsList from './components/products/ProductsList'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
+
+import ProductsList from './components/products/ProductsList'
 import Navbar from './components/Navbar/Navbar'
-import Herosection from './components/HeroSection/Herosection'
-import AISearchBar from './components/HeroSection/AISearchBar'
-import FeaturesSection from './components/Features/FeatureSections'
 import ProductDetail from './components/products/ProductDetail'
 import LandingPage from './components/Landing/LandingPgae'
 import AuthComponents from './components/User/AuthComponent'
 import ContactSeller from './components/User/ContactSeller'
 import Profile from './components/User/Profile'
 import Wishlist from './components/products/Wishlist'
+import ConversationList from './components/Messages/ConversationList'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -29,6 +27,7 @@ function App() {
         <Route path='/seller-contact' element={<ContactSeller/>}/>
         <Route path='/profile' element={<Profile />}/>
         <Route path='/wishlist' element={<Wishlist />} />
+        <Route path='/conversations' element={<ConversationList />} />
       </Routes>
     </BrowserRouter>
     </>

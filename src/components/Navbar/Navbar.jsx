@@ -55,6 +55,10 @@ const Navbar = () => {
                 <Link to="/wishlist" className="text-slate-600 hover:text-blue-600 transition font-medium">
                   Wishlist
                 </Link>
+
+                <Link to="/conversations" className="text-slate-600 hover:text-blue-600 transition font-medium">
+                  Conversations
+                </Link>
               </>
             )}
           </nav>

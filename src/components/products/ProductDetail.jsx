@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { AddProductToWishList, getProductDetails } from './services/products_services';
 import AISearchLoader from '../Loader/Loader';
-
+import {startConversation} from "../Messages/services/messages_services"
 const ImageGallery = ({ images, productName }) => {
   const [selectedImage, setSelectedImage] = useState(0);
 
@@ -67,7 +67,7 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
-
+  const [contactingLoading, setContactingLoading] = useState(false)
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -91,6 +91,15 @@ const ProductDetail = () => {
   const handleWishList = () => {
     AddProductToWishList(product.id);
   };
+
+   const handle_seller_contact = async () => {
+    try{
+      const response = await startConversation(id,product.seller)
+    }catch(err){
+      console.log('')
+    }
+  };
+
   if (!product) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 flex items-center justify-center">
@@ -121,7 +130,7 @@ const ProductDetail = () => {
           <ArrowLeft className="w-5 h-5 mr-2" />
           <Link to="/products" className="font-medium">Back to Products</Link>
         </motion.button>
-
+          {product.seller}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Left: Image Gallery */}
           <div>
@@ -301,16 +310,13 @@ const ProductDetail = () => {
                   <span>Wishlist</span>
                 </motion.button>
                 <motion.button 
+                  onClick={handle_seller_contact}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="flex items-center justify-center space-x-2 px-6 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl hover:shadow-xl transition font-semibold"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  <Link to="/seller-contact"
-                   state={{
-                        seller: product.seller,
-                    }}
-                  >Contact The Seller</Link>
+                  Contact The Seller
                 </motion.button>
               </div>
             </motion.div>
