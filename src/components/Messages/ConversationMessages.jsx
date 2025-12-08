@@ -5,30 +5,40 @@ import {
   CheckCheck, Loader2
 } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ConversationMessagesList } from './services/messages_services';
+import { ConversationMessagesList, sendMessage } from './services/messages_services';
 
 const ConversationMessages = () => {
   const [messages, setMessages] = useState([]);
+  const [conversationDetails, setConversationDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
   const { id: conversation_id } = useParams();
   const navigate = useNavigate();
   const messagesEndRef = useRef(null);
+  const currentUser = localStorage.getItem('username');
 
   useEffect(() => {
-    const MessagesData = async () => {
+    const fetchMessages = async () => {
       try {
         const data = await ConversationMessagesList(conversation_id);
-        setMessages(data);
-        console.log("success", data);
+        // If backend returns { conversation: {...}, messages: [...] }
+        if (data.conversation && data.messages) {
+          setConversationDetails(data.conversation);
+          setMessages(data.messages);
+        } else {
+          // If backend still returns just messages array
+          setMessages(data);
+        }
+        console.log("Messages loaded:", data);
       } catch(error) {
-        console.log("failed", error);
+        console.log("Failed to load messages:", error);
       } finally {
         setLoading(false);
       }
     };
-    MessagesData();
+    
+    fetchMessages();
   }, [conversation_id]);
 
   useEffect(() => {
@@ -40,18 +50,38 @@ const ConversationMessages = () => {
     if (!newMessage.trim() || sending) return;
 
     setSending(true);
+    const messageContent = newMessage;
+    
+    // Optimistic UI update - add message immediately
+    const optimisticMessage = {
+      id: 'temp-' + Date.now(),
+      content: messageContent,
+      sender: currentUser,
+      timestamp: new Date().toISOString(),
+    };
+    
+    setMessages([...messages, optimisticMessage]);
+    setNewMessage(''); // Clear input immediately for better UX
+    
     try {
-      const tempMessage = {
-        id: Date.now(),
-        content: newMessage,
-        sender: 'me',
-        timestamp: new Date().toISOString(),
-        is_read: false
-      };
-      setMessages([...messages, tempMessage]);
-      setNewMessage('');
+      // Send message to backend
+      const response = await sendMessage(conversation_id, messageContent);
+      
+      // Replace optimistic message with real one from server
+      if (response) {
+        setMessages(prevMessages => 
+          prevMessages.map(msg => 
+            msg.id === optimisticMessage.id ? response : msg
+          )
+        );
+      }
     } catch(error) {
       console.error('Failed to send message', error);
+      // Remove optimistic message on error and restore input
+      setMessages(prevMessages => 
+        prevMessages.filter(msg => msg.id !== optimisticMessage.id)
+      );
+      setNewMessage(messageContent);
     } finally {
       setSending(false);
     }
@@ -93,10 +123,16 @@ const ConversationMessages = () => {
             </div>
 
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-slate-900">Seller Name</h2>
+              <h2 className="text-xl font-bold text-slate-900">
+                {conversationDetails 
+                  ? (conversationDetails.sender === currentUser 
+                      ? conversationDetails.recipient 
+                      : conversationDetails.sender)
+                  : 'Chat'}
+              </h2>
               <div className="flex items-center space-x-2 text-sm text-slate-600">
                 <Package className="w-4 h-4" />
-                <span>Product Name</span>
+                <span>Product Chat</span>
               </div>
             </div>
 
@@ -128,7 +164,8 @@ const ConversationMessages = () => {
             ) : (
               <AnimatePresence>
                 {messages.map((message, index) => {
-                  const isMyMessage = message.sender === 'me' || message.is_sender;
+                  // Check if message is from current user
+                  const isMyMessage = message.sender === currentUser;
                   
                   return (
                     <motion.div
@@ -153,7 +190,7 @@ const ConversationMessages = () => {
                               : 'bg-slate-100 text-slate-900'
                           }`}
                         >
-                          <p className="text-sm break-words">{message.content || message.text}</p>
+                          <p className="text-sm break-words">{message.content}</p>
                           <div className={`flex items-center space-x-1 mt-1 text-xs ${
                             isMyMessage ? 'text-blue-100 justify-end' : 'text-slate-500'
                           }`}>
@@ -165,7 +202,7 @@ const ConversationMessages = () => {
                               }
                             </span>
                             {isMyMessage && (
-                              <CheckCheck className={`w-4 h-4 ${message.is_read ? 'text-blue-200' : 'text-blue-300'}`} />
+                              <CheckCheck className="w-4 h-4 text-blue-200" />
                             )}
                           </div>
                         </motion.div>

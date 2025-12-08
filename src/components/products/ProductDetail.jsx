@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
   Heart, ShoppingCart, Star, Sparkles, 
@@ -60,7 +60,6 @@ const ImageGallery = ({ images, productName }) => {
   );
 };
 
-// Product Detail Component
 const ProductDetail = () => {
   const BASE_URL = "http://127.0.0.1:8000";
   const { id } = useParams();
@@ -68,6 +67,7 @@ const ProductDetail = () => {
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
   const [contactingLoading, setContactingLoading] = useState(false)
+  const navigate = useNavigate()
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -95,6 +95,8 @@ const ProductDetail = () => {
    const handle_seller_contact = async () => {
     try{
       const response = await startConversation(id,product.seller)
+      const redirect_id = response.id
+      navigate(`/messages/${redirect_id}/`)  
     }catch(err){
       console.log('')
     }
